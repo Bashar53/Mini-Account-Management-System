@@ -1,0 +1,31 @@
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\bin\Debug\net8.0\appsettings.Development.json
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\bin\Debug\net8.0\appsettings.json
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\bin\Debug\net8.0\Mini Account Management System.staticwebassets.runtime.json
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\bin\Debug\net8.0\Mini Account Management System.exe
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\bin\Debug\net8.0\Mini Account Management System.deps.json
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\bin\Debug\net8.0\Mini Account Management System.runtimeconfig.json
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\bin\Debug\net8.0\Mini Account Management System.dll
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\bin\Debug\net8.0\Mini Account Management System.pdb
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\Mini Account Management System.GeneratedMSBuildEditorConfig.editorconfig
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\Mini Account Management System.AssemblyInfoInputs.cache
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\Mini Account Management System.AssemblyInfo.cs
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\Mini Account Management System.csproj.CoreCompileInputs.cache
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\Mini Account Management System.MvcApplicationPartsAssemblyInfo.cache
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\Mini Account Management System.RazorAssemblyInfo.cache
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\Mini Account Management System.RazorAssemblyInfo.cs
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\Mini Account Management System.sourcelink.json
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\staticwebassets.build.json
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\staticwebassets.development.json
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\staticwebassets\msbuild.Mini Account Management System.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\staticwebassets\msbuild.build.Mini Account Management System.props
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Mini Account Management System.props
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Mini Account Management System.props
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\scopedcss\bundle\Mini Account Management System.styles.css
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\scopedcss\projectbundle\Mini Account Management System.bundle.scp.css
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\Mini Account Management System.dll
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\refint\Mini Account Management System.dll
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\Mini Account Management System.pdb
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\Mini Account Management System.genruntimeconfig.cache
+C:\Practice Projects\Mini Account Management System\Mini Account Management System\obj\Debug\net8.0\ref\Mini Account Management System.dll

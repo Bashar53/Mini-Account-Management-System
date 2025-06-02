@@ -361,7 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-
-# Ignore built artifacts
-bin/
-obj/
+/Web/wwwroot/Content/GlobalQuestion
+/Web/wwwroot/css/dynamic-style-rf.css
+/Api/Properties/PublishProfiles/FolderProfile.pubxml.user
+/Api/Api.csproj.user

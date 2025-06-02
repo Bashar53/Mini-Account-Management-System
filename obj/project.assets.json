@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Practice Projects\\Mini Account Management System\\Mini Account Management System\\Mini Account Management System.csproj",
+      "projectUniqueName": "C:\\Practice Projects\\Mini Account Management System\\Mini Account Management System.csproj",
       "projectName": "Mini Account Management System",
-      "projectPath": "C:\\Practice Projects\\Mini Account Management System\\Mini Account Management System\\Mini Account Management System.csproj",
+      "projectPath": "C:\\Practice Projects\\Mini Account Management System\\Mini Account Management System.csproj",
       "packagesPath": "C:\\Users\\abul.bashar\\.nuget\\packages\\",
-      "outputPath": "C:\\Practice Projects\\Mini Account Management System\\Mini Account Management System\\obj\\",
+      "outputPath": "C:\\Practice Projects\\Mini Account Management System\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\abul.bashar\\AppData\\Roaming\\NuGet\\NuGet.Config",

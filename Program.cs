@@ -1,7 +1,12 @@
+using Microsoft.AspNet.Identity.EntityFramework;
+using Mini_Account_Management_System.DbConnection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 var app = builder.Build();
 

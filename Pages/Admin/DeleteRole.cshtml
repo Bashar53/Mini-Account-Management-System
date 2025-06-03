@@ -1,0 +1,24 @@
+﻿@page "{id}"
+@model Mini_Account_Management_System.Pages.Admin.DeleteRoleModel
+@{
+    ViewData["Title"] = "Delete Role";
+}
+<h2>Delete Role</h2>
+
+<div class="alert alert-warning">
+    Are you sure you want to delete the role <strong>@Model.Role.Name</strong>?
+</div>
+
+<form method="post">
+    <input type="hidden" asp-for="Role.Id" />
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a asp-page="/Admin/RoleList" class="btn btn-secondary">Cancel</a>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.StatusMessage))
+{
+    <div class="alert alert-info mt-3">
+        @Model.StatusMessage
+    </div>
+}
+

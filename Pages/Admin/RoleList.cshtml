@@ -4,7 +4,12 @@
     ViewData["Title"] = "All Roles";
 }
 <h2>All Roles</h2>
-
+<div class="text-end mb-3">
+    <a class="btn btn-primary" style="width:auto"
+       asp-page="/Admin/CreateRole">
+        Create Role
+    </a>
+</div>
 <table class="table">
         <tbody>
     @if (Model.Roles != null)
@@ -20,7 +25,7 @@
                 </div>
                 <div class="card-footer">
                     <a class="btn btn-primary" asp-page="/Admin/EditRole" asp-route-id="@role.Id">Edit</a>
-                    <a href="#" class="btn btn-danger">Delete</a>
+                    <a class="btn btn-danger" asp-page="/Admin/DeleteRole" asp-route-id="@role.Id">Delete</a>
                 </div>
             </div>
             }
@@ -37,7 +42,6 @@
                     </h5>
                     <a class="btn btn-primary" style="width:auto"
                        asp-page="/Admin/CreateRole">Create Role
-                       
                     </a>
                     
                 </div>

@@ -1,0 +1,24 @@
+﻿@page "{id}"
+@model Mini_Account_Management_System.Pages.Admin.EditRoleModel
+@{
+    ViewData["Title"] = "Edit Role";
+}
+<h2>Edit Role</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="RoleId" />
+
+    <div class="form-group">
+        <label asp-for="RoleName">Role Name</label>
+        <input asp-for="RoleName" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.StatusMessage))
+{
+    <div class="alert alert-info mt-3">
+        @Model.StatusMessage
+    </div>
+}

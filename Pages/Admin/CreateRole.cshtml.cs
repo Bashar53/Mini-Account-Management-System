@@ -43,6 +43,6 @@ public class CreateRoleModel : PageModel
         var result = await _roleManager.CreateAsync(new IdentityRole(RoleName));
         Message = result.Succeeded ? $"Role '{RoleName}' created successfully." : "Failed to create role.";
 
-        return Page();
+        return RedirectToPage("/Admin/RoleList");
     }
 }

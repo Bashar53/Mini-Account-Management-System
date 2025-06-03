@@ -1,0 +1,53 @@
+﻿@page
+@model Mini_Account_Management_System.Pages.Admin.ListRolesModel
+@{
+    ViewData["Title"] = "All Roles";
+}
+<h2>All Roles</h2>
+
+<table class="table">
+        <tbody>
+    @if (Model.Roles != null)
+    {
+        @foreach (var role in Model.Roles)
+        {
+            <div class="card mb-3">
+                <div class="card-header">
+                    Role Id : @role.Id
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@role.Name</h5>
+                </div>
+                <div class="card-footer">
+                       <a asp-area="Identity" asp-page="/Admin/CreateRole" 
+                       asp-route-roleId="@role.Id" class="btn btn-primary">
+                        Edit
+                    </a>
+                    <a href="#" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+            }
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-header">
+                    No roles created yet
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Use the button below to create a role
+                    </h5>
+                    <a class="btn btn-primary" style="width:auto"
+                       asp-page="/Admin/CreateRole">Create Role
+                       
+                    </a>
+                    
+                </div>
+            </div>
+            
+        }
+    </tbody>
+</table>
+
+

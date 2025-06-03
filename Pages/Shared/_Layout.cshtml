@@ -27,8 +27,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/Admin/RoleList">Roles</a>
+                            </li>
+                        }
                         </ul>
-
                         <ul class="navbar-nav ml-auto">
                         @*If the user is signed-in display Logout link*@
                         @if (SignInManager.IsSignedIn(User))
@@ -41,12 +46,7 @@
                                     </button>
                                         </form>
                             </li>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-page="/Admin/CreateRole">Create Role</a>
-                                </li>
-                            }
+                           
 
                         }
                         else

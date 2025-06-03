@@ -9,6 +9,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDefaultIdentity<IdentityUser>(options => {
     options.SignIn.RequireConfirmedAccount = false;
 })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 // Configure the Application Cookie settings
 builder.Services.ConfigureApplicationCookie(options =>
@@ -17,10 +18,27 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Identity/Account/Login"; // Set your login path here
 });
 
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
+
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    var adminUser = await userManager.FindByEmailAsync("bashar.iiuc77@gmail.com");
+    if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, "Admin"))
+    {
+        await userManager.AddToRoleAsync(adminUser, "Admin");
+    }
+}
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

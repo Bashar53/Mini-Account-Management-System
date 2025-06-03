@@ -14,7 +14,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => {
 builder.Services.ConfigureApplicationCookie(options =>
 {
     // If the LoginPath isn't set, ASP.NET Core defaults the path to /Account/Login.
-    options.LoginPath = "/Account/Login"; // Set your login path here
+    options.LoginPath = "/Identity/Account/Login"; // Set your login path here
 });
 
 // Add services to the container.

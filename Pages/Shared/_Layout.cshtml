@@ -41,6 +41,13 @@
                                     </button>
                                         </form>
                             </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-page="/Admin/CreateRole">Create Role</a>
+                                </li>
+                            }
+
                         }
                         else
                         {

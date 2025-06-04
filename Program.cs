@@ -13,6 +13,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => {
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<MenuService>();
+builder.Services.AddScoped<PermissionService>();
+builder.Services.AddHttpContextAccessor();
 // Configure the Application Cookie settings
 builder.Services.ConfigureApplicationCookie(options =>
 {

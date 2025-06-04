@@ -16,4 +16,10 @@ namespace Mini_Account_Management_System.Models
         public bool vUpdate { get; set; }
         public bool vDelete { get; set; }
     }
+
+    public class PermissionWrapper
+    {
+        public int AppResourceId { get; set; }
+        public AppPermission Permissions { get; set; } = new();
+    }
 }

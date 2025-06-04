@@ -1,5 +1,13 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Mini_Account_Management_System.Service
 @inject SignInManager<IdentityUser> SignInManager
+@inject MenuService MenuService
+@inject UserManager<IdentityUser> UserManager
+@{
+    var userId = UserManager.GetUserId(User);
+    var menu = MenuService.GetUserMenu(userId);
+}
+<partial name="_Menu" />
 <!DOCTYPE html>
 <html lang="en">
 <head>

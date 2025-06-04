@@ -1,0 +1,57 @@
+﻿@page
+@model Mini_Account_Management_System.Pages.Admin.AssignPermissionsModel
+@{
+    ViewData["Title"] = "Assign Permissions";
+}
+<h2>Assign Permissions</h2>
+<form method="post">
+    <div class="mb-3"> <label>Select Role</label> <select asp-for="SelectedRoleId" asp-items="Model.Roles" class="form-select"></select> </div>
+   
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Module</th>
+                <th>Create</th>
+                <th>Read</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Permissions.Count; i++)
+            {
+                var res = Model.Resources.First(r => r.AppResourceId == Model.Permissions[i].AppResourceId);
+                <tr>
+                    <td>
+                        @res.DisplayName
+                        <input type="hidden" asp-for="Permissions[@i].AppResourceId" />
+                    </td>
+                    <td>
+                        @* //<input type="hidden" asp-for="Permissions[@i].Permissions.vCreate" value="false" /> *@
+                        <input type="checkbox" asp-for="Permissions[@i].Permissions.vCreate" value="true" />
+                    </td>
+                    <td>
+                      @*   //<input type="hidden" asp-for="Permissions[@i].Permissions.vRead" value="false" /> *@
+                        <input type="checkbox" asp-for="Permissions[@i].Permissions.vRead" value="true" />
+                    </td>
+                    <td>
+                       @*  <input type="hidden" asp-for="Permissions[@i].Permissions.vUpdate" value="false" /> *@
+                        <input type="checkbox" asp-for="Permissions[@i].Permissions.vUpdate" value="true" />
+                    </td>
+                    <td>
+                       @*  <input type="hidden" asp-for="Permissions[@i].Permissions.vDelete" value="false" /> *@
+                        <input type="checkbox" asp-for="Permissions[@i].Permissions.vDelete" value="true" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Save Permissions</button>
+</form>
+@if (TempData["StatusMessage"] != null)
+{
+    <div class="alert alert-success mt-3">
+        @TempData["StatusMessage"]
+    </div>
+}

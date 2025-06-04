@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject DbConnection.ApplicationDbContext _context
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    var userId = UserManager.GetUserId(User);
+    var permittedResources = _context.AppPermissions
+        .Where(p => p.UserId == userId && p.vRead == true)
+        .Join(_context.AppResources, p => p.AppResourceId, r => r.AppResourceId, (p, r) => r)
+        .Where(r => r.MenuIsVisible == true && r.IsActive == true)
+        .OrderBy(r => r.MenuOrder)
+        .ToList();
+}
+
+<ul class="nav flex-column">
+    @foreach (var item in permittedResources)
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-page="@item.Url">
+                <i class="@item.IconClass"></i> @item.DisplayName
+            </a>
+        </li>
+    }
+</ul>
+

@@ -30,8 +30,8 @@ public class ListRolesModel : PageModel
 
     public async Task<IActionResult> OnGet()
     {
-        var userId = _userManager.GetUserId(User);
-
+        var role = await _roleManager.FindByNameAsync("Admin");
+        var roleId = await _roleManager.GetRoleIdAsync(role);
         // Match the current page with the AppResources entry (by Url)
         var resource = await _context.AppResources.FirstOrDefaultAsync(r => r.Url == "/Admin/RoleList");
 
@@ -39,10 +39,8 @@ public class ListRolesModel : PageModel
         {
             return Forbid(); // No resource mapping → deny access
         }
-
-        // Check permissions for the current user
         var permission = await _context.AppPermissions
-            .FirstOrDefaultAsync(p => p.UserId == userId && p.AppResourceId == resource.AppResourceId);
+            .FirstOrDefaultAsync(p => p.RoleId == roleId && p.AppResourceId == resource.AppResourceId);
 
         if (permission?.vRead == true)
         {

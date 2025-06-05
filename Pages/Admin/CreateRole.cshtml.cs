@@ -34,7 +34,7 @@ public class CreateRoleModel : PageModel
 
     public async Task<IActionResult> OnGet() {
         AllUsers = _userManager.Users.ToList();
-        bool canCreate = await _permissionService.HasPermissionAsync(2, "create");
+        bool canCreate = await _permissionService.HasPermissionAsync(3, "create");
         if (!canCreate)
             return Forbid(); // or RedirectToPage("/AccessDenied");
 

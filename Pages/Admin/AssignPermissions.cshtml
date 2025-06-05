@@ -4,9 +4,17 @@
     ViewData["Title"] = "Assign Permissions";
 }
 <h2>Assign Permissions</h2>
+<form method="get">
+    <div class="mb-3">
+        <label>Select Role</label>
+        <select asp-for="SelectedRoleId" asp-items="Model.Roles" class="form-select" onchange="this.form.submit()">
+            <option value="">-- Select Role --</option>
+        </select>
+    </div>
+</form>
 <form method="post">
-    <div class="mb-3"> <label>Select Role</label> <select asp-for="SelectedRoleId" asp-items="Model.Roles" class="form-select"></select> </div>
-   
+    <input type="hidden" asp-for="SelectedRoleId" />  @* Retain selected role on post *@
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -27,19 +35,15 @@
                         <input type="hidden" asp-for="Permissions[@i].AppResourceId" />
                     </td>
                     <td>
-                        @* //<input type="hidden" asp-for="Permissions[@i].Permissions.vCreate" value="false" /> *@
                         <input type="checkbox" asp-for="Permissions[@i].Permissions.vCreate" value="true" />
                     </td>
                     <td>
-                      @*   //<input type="hidden" asp-for="Permissions[@i].Permissions.vRead" value="false" /> *@
                         <input type="checkbox" asp-for="Permissions[@i].Permissions.vRead" value="true" />
                     </td>
                     <td>
-                       @*  <input type="hidden" asp-for="Permissions[@i].Permissions.vUpdate" value="false" /> *@
                         <input type="checkbox" asp-for="Permissions[@i].Permissions.vUpdate" value="true" />
                     </td>
                     <td>
-                       @*  <input type="hidden" asp-for="Permissions[@i].Permissions.vDelete" value="false" /> *@
                         <input type="checkbox" asp-for="Permissions[@i].Permissions.vDelete" value="true" />
                     </td>
                 </tr>

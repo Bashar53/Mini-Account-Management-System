@@ -16,12 +16,12 @@ namespace Mini_Account_Management_System.Pages.Admin
             private readonly RoleManager<IdentityRole> _roleManager;
             private readonly UserManager<IdentityUser> _userManager;
         public AssignPermissionsModel(ApplicationDbContext context, RoleManager<IdentityRole> roleManager , UserManager<IdentityUser> userManager)
-            {
-                _context = context;
-                _roleManager = roleManager;
-                _userManager = userManager;
-            }
-        [BindProperty]
+        {
+            _context = context;
+            _roleManager = roleManager;
+            _userManager = userManager;
+        }
+        [BindProperty(SupportsGet = true)]
         public string SelectedRoleId { get; set; }
 
         [BindProperty]
@@ -38,15 +38,32 @@ namespace Mini_Account_Management_System.Pages.Admin
                     .Where(r => r.MenuIsVisible == true && r.IsActive == true)
                     .OrderBy(r => r.MenuOrder)
                     .ToListAsync();
-            Permissions = Resources.Select(r => new PermissionWrapper
+            var existingPermissions = new List<AppPermission>();
+            
+            if (!string.IsNullOrEmpty(SelectedRoleId))
             {
-                AppResourceId = r.AppResourceId,
-                Permissions = new AppPermission()
+                existingPermissions = await _context.AppPermissions
+                    .Where(p => p.RoleId == SelectedRoleId)
+                    .ToListAsync();
+            }
+            Permissions = Resources.Select(resource =>
+            {   
+                // Check if permission already exists
+                var existing = existingPermissions.FirstOrDefault(p => p.AppResourceId == resource.AppResourceId);
+
+                return new PermissionWrapper
+                {
+                    AppResourceId = resource.AppResourceId,
+                    Permissions = existing ?? new AppPermission
+                    {
+                        RoleId = SelectedRoleId,
+                        AppResourceId = resource.AppResourceId
+                    }
+                };
             }).ToList();
         }
             public async Task<IActionResult> OnPostAsync()
             {
-                 var a = Permissions.FirstOrDefault();
                 foreach (var entry in Permissions)
                 {
                 var resId = entry.AppResourceId;
@@ -54,7 +71,6 @@ namespace Mini_Account_Management_System.Pages.Admin
                 await _context.Database.ExecuteSqlInterpolatedAsync($@"
                 EXEC sp_AssignPermissions 
                 @RoleId = {SelectedRoleId},
-                @UserId = {null},
                 @AppResourceId = {resId},
                 @vCreate = {perm.vCreate},
                 @vRead = {perm.vRead},

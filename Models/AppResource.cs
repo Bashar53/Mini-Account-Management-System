@@ -15,8 +15,8 @@ public class AppResource
         public bool IsModel { get; set; }
         public string IconClass { get; set; } = "fa-solid fa-bars";
         public string Url { get; set; }
-        public bool? MenuIsVisible { get; set; } = false;
-        public bool? IsActive { get; set; } = false;
+        public bool MenuIsVisible { get; set; } = false;
+        public bool IsActive { get; set; } = false;
         public string Position { get; set; } = "Top";
         public bool? HasLeftMenu { get; set; } = false;
         public bool? HasSeparator { get; set; } = false;

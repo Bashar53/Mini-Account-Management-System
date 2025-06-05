@@ -7,17 +7,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Mini_Account_Management_System.Service;
 
 [Authorize(Roles = "Admin")]
 public class CreateRoleModel : PageModel
 {
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly UserManager<IdentityUser> _userManager;
+    private readonly PermissionService _permissionService;
 
-    public CreateRoleModel(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+    public CreateRoleModel(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, PermissionService permissionService)
     {
         _roleManager = roleManager;
         _userManager = userManager;
+        _permissionService = permissionService;
     }
 
     [BindProperty]
@@ -29,8 +32,13 @@ public class CreateRoleModel : PageModel
 
     public string StatusMessage { get; set; }
 
-    public void OnGet() {
+    public async Task<IActionResult> OnGet() {
         AllUsers = _userManager.Users.ToList();
+        bool canCreate = await _permissionService.HasPermissionAsync(2, "create");
+        if (!canCreate)
+            return Forbid(); // or RedirectToPage("/AccessDenied");
+
+        return Page();
     }
     public async Task<IActionResult> OnPostAsync()
     {

@@ -9,7 +9,7 @@ namespace Mini_Account_Management_System.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AppPermissionId { get; set; }
         public string RoleId { get; set; }
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
         public int AppResourceId { get; set; }
         public bool vCreate { get; set; }
         public bool vRead { get; set; }

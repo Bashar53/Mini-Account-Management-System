@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Mini_Account_Management_System.DbConnection;
+using Mini_Account_Management_System.Models;
 using Mini_Account_Management_System.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => {
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<MenuService>();
 builder.Services.AddScoped<PermissionService>();
+builder.Services.AddScoped<AccountsChartService>();
 builder.Services.AddHttpContextAccessor();
 // Configure the Application Cookie settings
 builder.Services.ConfigureApplicationCookie(options =>
@@ -21,7 +23,6 @@ builder.Services.ConfigureApplicationCookie(options =>
     // If the LoginPath isn't set, ASP.NET Core defaults the path to /Account/Login.
     options.LoginPath = "/Identity/Account/Login"; // Set your login path here
 });
-
 
 // Add services to the container.
 builder.Services.AddRazorPages();

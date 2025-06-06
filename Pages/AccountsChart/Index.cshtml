@@ -1,0 +1,22 @@
+﻿@page
+@model Mini_Account_Management_System.Pages.AccountsChart.IndexModel
+@{
+    ViewData["Title"] = "Chart of Accounts";
+}
+<h1>Chart of Accounts</h1>
+<a asp-page="Upsert" class="btn btn-primary mb-3">+ New Account</a>
+
+<!-- Hierarchical tree -->
+<partial name="_AccountTree" model="Model.RootNodes" />
+
+@section Scripts {
+    <script>
+        // simple expand/collapse
+        document.querySelectorAll('[data-toggle]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const ul = btn.nextElementSibling;
+                if (ul) ul.classList.toggle('d-none');
+            });
+        });
+    </script>
+}

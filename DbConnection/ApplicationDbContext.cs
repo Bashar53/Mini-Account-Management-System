@@ -13,5 +13,6 @@ namespace Mini_Account_Management_System.DbConnection
         }
         public DbSet<AppResource> AppResources { get; set; }
         public DbSet<AppPermission> AppPermissions { get; set; }    
+        public DbSet<AccountsChart> AccountsChart { get; set; }    
     }
 }

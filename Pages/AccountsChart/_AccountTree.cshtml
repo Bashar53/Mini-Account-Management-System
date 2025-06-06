@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Models.AccountsChart>
+
+<ul class="list-group @(Model.FirstOrDefault()?.ParentId == null ? "ms-0" : "ms-4")">
+    @foreach (var acc in Model.OrderBy(a => a.AccountName))
+    {
+        <li class="list-group-item">
+            @if (acc.Children.Any())
+            {
+                <button type="button"
+                        class="btn btn-sm btn-link"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#children-@acc.AccountId"
+                        aria-expanded="true">
+                    <span>&#x25BC;</span>
+                </button>
+            }
+
+            @acc.AccountName
+
+            <a asp-page="Upsert"
+               asp-route-id="@acc.AccountId"
+               class="btn btn-sm">Edit</a>
+
+            <form asp-page-handler="Delete"
+                  asp-route-id="@acc.AccountId"
+
+                  method="post"
+                  class="d-inline">
+                <span>ID: @acc.AccountId</span>
+                <button class="btn btn-sm btn-danger"
+                        onclick="return confirm('Delete @acc.AccountName?')">
+                    ×
+                </button>
+            </form>
+
+            @if (acc.Children.Any())
+            {
+                <div id="children-@acc.AccountId" class="collapse show">
+                    <partial name="_AccountTree" model="acc.Children" />
+                </div>
+            }
+        </li>
+    }
+</ul>

@@ -1,0 +1,109 @@
+﻿@page
+@model VoucherEntryModel
+@{
+    ViewData["Title"] = "Voucher Entry";
+}
+
+<h2 class="mb-4">Voucher Entry</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<form method="post" id="voucherForm">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label class="form-label">Voucher Type</label>
+            <select asp-for="VoucherType" class="form-select">
+                <option value="">-- Select Type --</option>
+                <option value="Journal">Journal</option>
+                <option value="Payment">Payment</option>
+                <option value="Receipt">Receipt</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Date</label>
+            <input asp-for="Date" type="date" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Reference No</label>
+            <input asp-for="ReferenceNo" class="form-control" />
+        </div>
+    </div>
+
+    <table class="table table-bordered table-sm" id="entriesTable">
+        <thead class="table-light">
+            <tr>
+                <th style="width: 40%">Account</th>
+                <th style="width: 20%">Debit</th>
+                <th style="width: 20%">Credit</th>
+                <th style="width: 10%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Entries.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <select asp-for="Entries[@i].AccountId" asp-items="Model.AccountList" class="form-select"></select>
+                    </td>
+                    <td>
+                        <input asp-for="Entries[@i].Debit" class="form-control" />
+                    </td>
+                    <td>
+                        <input asp-for="Entries[@i].Credit" class="form-control" />
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-danger btn-sm remove-row">−</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="mb-3">
+        <button type="button" class="btn btn-secondary" id="addRowBtn">+ Add Row</button>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Voucher</button>
+</form>
+
+@section Scripts {
+    <script>
+        let rowIndex = @Model.Entries.Count;
+
+        document.getElementById('addRowBtn').addEventListener('click', function () {
+            const table = document.getElementById('entriesTable').querySelector('tbody');
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>
+                    <select name="Entries[${rowIndex}].AccountId" class="form-select">
+                        @foreach (var item in Model.AccountList)
+                        {
+                            <text><option value="@item.Value">@item.Text</option></text>
+                        }
+                    </select>
+                </td>
+                <td>
+                    <input name="Entries[${rowIndex}].Debit" class="form-control" />
+                </td>
+                <td>
+                    <input name="Entries[${rowIndex}].Credit" class="form-control" />
+                </td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-danger btn-sm remove-row">−</button>
+                </td>
+            `;
+            table.appendChild(row);
+            rowIndex++;
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('remove-row')) {
+                e.target.closest('tr').remove();
+            }
+        });
+    </script>
+}

@@ -6,6 +6,8 @@
 <h2>@ViewData["Title"]</h2>
 
 <form method="post">
+    <input type="hidden" asp-for="Input.AccountId" />
+
     <div class="mb-3">
         <label asp-for="Input.AccountName" class="form-label"></label>
         <input asp-for="Input.AccountName" class="form-control" />
@@ -27,5 +29,5 @@
 </form>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+        <partial name="_ValidationScriptsPartial" />
 }

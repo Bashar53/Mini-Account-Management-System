@@ -24,7 +24,8 @@
                     <h5 class="card-title">@role.Name</h5>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-primary" asp-page="/Admin/EditRole" asp-route-id="@role.Id">Edit</a>
+                            <a asp-page="/Admin/EditRole" asp-route-RoleId="@role.Id" class="btn btn-primary">Edit</a>
+
                     <a class="btn btn-danger" asp-page="/Admin/DeleteRole" asp-route-id="@role.Id">Delete</a>
                 </div>
             </div>

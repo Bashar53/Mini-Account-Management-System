@@ -1,5 +1,6 @@
-﻿@page "/Admin/CreateRole"
+﻿@page
 @model Mini_Account_Management_System.Pages.Admin.CreateRoleModel
+@using Mini_Account_Management_System.Models
 @{
     ViewData["Title"] = "Create Role";
 }
@@ -10,25 +11,68 @@
     <div class="form-group">
         <label asp-for="RoleName">Role Name</label>
         <input asp-for="RoleName" class="form-control" />
+        <span asp-validation-for="RoleName" class="text-danger"></span>
     </div>
+
     <hr />
     <h4>Assign Users</h4>
-
     @foreach (var user in Model.AllUsers)
     {
         <div class="form-check">
-            <input class="form-check-input" type="checkbox"
-                   name="SelectedUserIds"
-                   value="@user.Id" />
+            <input class="form-check-input" type="checkbox" name="SelectedUserIds" value="@user.Id" />
             <label class="form-check-label">@user.UserName</label>
         </div>
     }
-    <button type="submit" class="btn btn-primary">Create Role</button>
+
+    <hr />
+    <h4>Assign Permissions</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Module</th>
+                <th>Create</th>
+                <th>Read</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Permissions.Count; i++)
+            {
+                var res = Model.Resources.FirstOrDefault(r => r.AppResourceId == Model.Permissions[i].AppResourceId);
+                if (res != null)
+                {
+                    <tr>
+                        <td>
+                            @res.DisplayName
+                            <input type="hidden" asp-for="Permissions[@i].AppResourceId" />
+                        </td>
+                        <td>
+                            <input type="checkbox" asp-for="Permissions[@i].Permissions.vCreate" />
+                        </td>
+                        <td>
+                            <input type="checkbox" asp-for="Permissions[@i].Permissions.vRead" />
+                        </td>
+                        <td>
+                            <input type="checkbox" asp-for="Permissions[@i].Permissions.vUpdate" />
+                        </td>
+                        <td>
+                            <input type="checkbox" asp-for="Permissions[@i].Permissions.vDelete" />
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Create Role with Permissions</button>
 </form>
 
 @if (!string.IsNullOrEmpty(Model.StatusMessage))
 {
-    <div class="alert alert-info mt-3">
-        @Model.StatusMessage
-    </div>
+    <div class="alert alert-info mt-3">@Model.StatusMessage</div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

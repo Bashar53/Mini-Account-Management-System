@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -5,6 +6,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Mini_Account_Management_System.DbConnection;
 using Mini_Account_Management_System.Models;
+using Mini_Account_Management_System.Service;
 using System;
 using System.Data;
 
@@ -13,20 +15,28 @@ namespace Mini_Account_Management_System.Pages.Voucher
     public class VoucherEntryModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        public VoucherEntryModel(ApplicationDbContext context)
+        private readonly PermissionService _permissionService;
+        public VoucherEntryModel(ApplicationDbContext context, PermissionService permissionService) 
         {
             _context = context;
+            _permissionService = permissionService;
         }
         [BindProperty] public string VoucherType { get; set; }
         [BindProperty] public DateTime Date { get; set; }
         [BindProperty] public string ReferenceNo { get; set; }
         [BindProperty] public List<VoucherEntry> Entries { get; set; } = new();
         public List<SelectListItem> AccountList { get; set; } = new();
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            var currentUrl = HttpContext.Request.Path.Value;
+
+            var hasPermission = await _permissionService.HasPermissionByUrlAsync(currentUrl, "read");
+            if (!hasPermission)
+                return Forbid();
+            hasPermission = true;
             LoadAccounts();
             Entries.Add(new VoucherEntry());
-           
+            return Page();
         }
         private void LoadAccounts()
         {
@@ -51,6 +61,10 @@ namespace Mini_Account_Management_System.Pages.Voucher
 
         public async Task<IActionResult> OnPostAsync()
         {
+            var currentUrl = HttpContext.Request.Path.Value;
+            var hasPermission = await _permissionService.HasPermissionByUrlAsync(currentUrl, "create");
+            if (!hasPermission)
+                return Forbid();
             var connection = _context.Database.GetDbConnection();
 
             if (connection.State != ConnectionState.Open)
@@ -96,9 +110,8 @@ namespace Mini_Account_Management_System.Pages.Voucher
 
             }
 
-            // Optionally: Return to same page with success flag
             TempData["SuccessMessage"] = "Voucher saved successfully.";
-            return RedirectToPage("/Voucher/VoucherEntry");
+            return RedirectToPage("/Voucher/ExportVoucher");
         }
 
     }

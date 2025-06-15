@@ -22,7 +22,7 @@ namespace Mini_Account_Management_System.Pages.Voucher
             _permissionService = permissionService;
         }
         [BindProperty] public string VoucherType { get; set; }
-        [BindProperty] public DateTime Date { get; set; }
+        [BindProperty] public DateTime? Date { get; set; }
         [BindProperty] public string ReferenceNo { get; set; }
         [BindProperty] public List<VoucherEntry> Entries { get; set; } = new();
         public List<SelectListItem> AccountList { get; set; } = new();

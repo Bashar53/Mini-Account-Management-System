@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Mini_Account_Management_System.DbConnection;
 using Mini_Account_Management_System.Models;
+using Mini_Account_Management_System.Service;
 using OfficeOpenXml;
 
 namespace Mini_Account_Management_System.Pages.Voucher
@@ -11,10 +12,12 @@ namespace Mini_Account_Management_System.Pages.Voucher
     public class ExportVoucherModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly PermissionService _permissionService;
 
-        public ExportVoucherModel(ApplicationDbContext context)
+        public ExportVoucherModel(ApplicationDbContext context, PermissionService permissionService)
         {
             _context = context;
+            _permissionService = permissionService;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -29,14 +32,22 @@ namespace Mini_Account_Management_System.Pages.Voucher
         public List<VoucherReportDto> VoucherList { get; set; } = new();
 
         // This runs when page loads or user presses Search button
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            var currentUrl = HttpContext.Request.Path.Value;
+            var hasPermission = await _permissionService.HasPermissionByUrlAsync(currentUrl, "read");
+            if (!hasPermission)
+                return Forbid();
             await LoadVouchersAsync();
+            return Page();
         }
-
         // Called when user clicks Export Excel
         public async Task<IActionResult> OnGetExportAsync()
         {
+            var currentUrl = HttpContext.Request.Path.Value;
+            var hasPermission = await _permissionService.HasPermissionByUrlAsync(currentUrl, "read");
+            if (!hasPermission)
+                return Forbid();
             await LoadVouchersAsync(); // Get the same filtered data
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;

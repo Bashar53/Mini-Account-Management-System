@@ -1,25 +1,45 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Html
+@using Microsoft.AspNetCore.Identity
+@using Mini_Account_Management_System.Models
 @inject DbConnection.ApplicationDbContext _context
 @inject UserManager<IdentityUser> UserManager
 
 @{
     var userId = UserManager.GetUserId(User);
     var permittedResources = _context.AppPermissions
-        .Where(p => p.UserId == userId && p.vRead == true)
+        .Where(p => p.UserId == userId && p.vRead)
         .Join(_context.AppResources, p => p.AppResourceId, r => r.AppResourceId, (p, r) => r)
-        .Where(r => r.MenuIsVisible == true && r.IsActive == true)
+        .Where(r => r.MenuIsVisible && r.IsActive)
         .OrderBy(r => r.MenuOrder)
         .ToList();
 }
 
-<ul class="nav flex-column">
-    @foreach (var item in permittedResources)
+@functions {
+    public IHtmlContent RenderMenuTree(List<AppResource> items)
     {
-        <li class="nav-item">
-            <a class="nav-link" asp-page="@item.Url">
-                <i class="@item.IconClass"></i> @item.DisplayName
-            </a>
-        </li>
+        var builder = new TagBuilder("ul");
+        builder.AddCssClass("nav flex-column");
+
+        foreach (var item in items)
+        {
+            var li = new TagBuilder("li");
+            li.AddCssClass("nav-item");
+
+            var a = new TagBuilder("a");
+            a.AddCssClass("nav-link");
+            a.Attributes["asp-page"] = item.Url;
+            a.InnerHtml.AppendHtml($"<i class=\"{item.IconClass}\"></i> {item.DisplayName}");
+            li.InnerHtml.AppendHtml(a);
+
+            if (item.Children?.Any() == true)
+            {
+                li.InnerHtml.AppendHtml(RenderMenuTree(item.Children));
+            }
+
+            builder.InnerHtml.AppendHtml(li);
+        }
+
+        return builder;
     }
-</ul>
+}
 

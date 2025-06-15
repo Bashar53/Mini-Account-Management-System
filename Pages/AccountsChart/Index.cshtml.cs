@@ -48,6 +48,10 @@ namespace Mini_Account_Management_System.Pages.AccountsChart
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
+            var currentUrl = HttpContext.Request.Path.Value;
+            bool canDelete = await _permissionService.HasPermissionByUrlAsync(currentUrl, "delete");
+            if (!canDelete)
+                return Forbid();
             await _ctx.DeleteAccountAsync(id); 
             return RedirectToPage();
         }

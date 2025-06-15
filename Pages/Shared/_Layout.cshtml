@@ -3,11 +3,17 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject MenuService MenuService
 @inject UserManager<IdentityUser> UserManager
+@inject Mini_Account_Management_System.Service.PermissionService PermissionService
+
 @{
     var userId = UserManager.GetUserId(User);
     var menu = MenuService.GetUserMenu(userId);
+    
+    var menuTree = await PermissionService.GetMenuTreeAsync();
+
 }
 <partial name="_Menu" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,18 +35,13 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-page="/Admin/RoleList">Roles</a>
-                            </li>
-                        }
+                       
+                            @foreach (var item in menuTree)
+                            {
+                                <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="@item.Url">@item.DisplayName</a>
+                                </li>
+                            }
                         </ul>
                         <ul class="navbar-nav ml-auto">
                         @*If the user is signed-in display Logout link*@
@@ -120,4 +121,6 @@
             toast.show();
         }
     });
+
 </script>
+

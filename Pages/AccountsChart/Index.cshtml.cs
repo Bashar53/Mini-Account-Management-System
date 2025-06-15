@@ -10,10 +10,18 @@ namespace Mini_Account_Management_System.Pages.AccountsChart
     public class IndexModel : PageModel
     {
         private readonly AccountsChartService _ctx;
-        public List<Models.AccountsChart> RootNodes { get; private set; } = new List<Models.AccountsChart>();
-        public IndexModel(AccountsChartService ctx) => _ctx = ctx;
-        public async Task OnGetAsync()
+        private readonly PermissionService _permissionService;
+
+        public List<Models.AccountsChart> RootNodes { get; private set; } = new();
+        public IndexModel(AccountsChartService ctx, PermissionService permissionService)
+            => (_ctx, _permissionService) = (ctx, permissionService);
+        public async Task<IActionResult> OnGetAsync()
         {
+            var currentUrl = HttpContext.Request.Path.Value;
+            bool canRead = await _permissionService.HasPermissionByUrlAsync(currentUrl, "read");
+            if (!canRead)
+                return Forbid();
+
             var flatList = await _ctx.GetAccountsChartAsync("SELECT");
 
             // Initialize Children list for all accounts to avoid null refs
@@ -35,7 +43,7 @@ namespace Mini_Account_Management_System.Pages.AccountsChart
 
             // Root nodes = accounts with no parent
             RootNodes = flatList.Where(a => a.ParentId == null).ToList();
-        
+            return Page();
     }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)

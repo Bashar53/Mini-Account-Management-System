@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Mini_Account_Management_System.DbConnection;
+using System.Data;
 
 namespace Mini_Account_Management_System.Pages.Admin;
 
-[Authorize(Roles = "Admin")]
+[Authorize]
 public class ListRolesModel : PageModel
 {
     private readonly RoleManager<IdentityRole> _roleManager;
@@ -30,25 +31,44 @@ public class ListRolesModel : PageModel
 
     public async Task<IActionResult> OnGet()
     {
-        var role = await _roleManager.FindByNameAsync("Admin");
-        var roleId = await _roleManager.GetRoleIdAsync(role);
-        // Match the current page with the AppResources entry (by Url)
-        var resource = await _context.AppResources.FirstOrDefaultAsync(r => r.Url == "/Admin/RoleList");
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+            return Challenge(); // Not logged in
+
+        var roles = await _userManager.GetRolesAsync(user);
+        if (!roles.Any())
+            return Forbid();
+
+        var currentUrl = HttpContext.Request.Path.Value.ToLower();
+        var resource = await _context.AppResources
+            .FirstOrDefaultAsync(r => r.Url.ToLower() == currentUrl);
 
         if (resource == null)
         {
             return Forbid(); // No resource mapping → deny access
         }
-        var permission = await _context.AppPermissions
-            .FirstOrDefaultAsync(p => p.RoleId == roleId && p.AppResourceId == resource.AppResourceId);
-
-        if (permission?.vRead == true)
+        bool hasReadPermission = false;
+        foreach (var roleName in roles)
         {
-            CanRead = true;
-            Roles = _roleManager.Roles.ToList();
-            return Page();
-        }
+            var role = await _roleManager.FindByNameAsync(roleName);
+            if (role == null) continue;
 
-        return Forbid();
+            var permission = await _context.AppPermissions
+                .FirstOrDefaultAsync(p => p.RoleId == role.Id && p.AppResourceId == resource.AppResourceId);
+
+            if (permission?.vRead == true)
+            {
+                hasReadPermission = true;
+                break;
+            }
+        }
+        if (!hasReadPermission)
+            return Forbid();
+
+        CanRead = true;
+        Roles = _roleManager.Roles.ToList();
+        return Page();
+
+        
     }
 }

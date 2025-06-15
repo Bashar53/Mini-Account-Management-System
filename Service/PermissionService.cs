@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Mini_Account_Management_System.DbConnection;
+using Mini_Account_Management_System.Models;
 
 namespace Mini_Account_Management_System.Service
 {
@@ -78,5 +79,56 @@ namespace Mini_Account_Management_System.Service
 
             return "/" + string.Join("/", parts); // fallback
         }
+        public async Task<List<AppResource>> GetMenuTreeAsync()
+        {
+            var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            if (user == null) return new();
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var roleName = roles.FirstOrDefault();
+            if (string.IsNullOrEmpty(roleName)) return new();
+
+            var roleId = await _context.Roles
+                .Where(r => r.Name == roleName)
+                .Select(r => r.Id)
+                .FirstOrDefaultAsync();
+
+            var permittedResourceIds = await _context.AppPermissions
+                .Where(p => p.RoleId == roleId && p.vRead)
+                .Select(p => p.AppResourceId)
+                .ToListAsync();
+
+            var allResources = await _context.AppResources
+                .Where(r => permittedResourceIds.Contains(r.AppResourceId))
+                .OrderBy(r => r.MenuOrder) 
+                .ToListAsync();
+
+            // Build tree
+            foreach (var res in allResources)
+            {
+                res.Children = new List<AppResource>();
+            }
+
+            var lookup = allResources.ToDictionary(r => r.AppResourceId);
+
+            List<AppResource> rootNodes = new();
+
+            foreach (var res in allResources)
+            {
+                if (res.ParentId != null && lookup.ContainsKey(res.ParentId))
+                {
+                    lookup[res.ParentId].Children.Add(res);
+                }
+                else
+                {
+                    rootNodes.Add(res);
+                }
+            }
+
+            return rootNodes;
+        }
+
+
     }
+
 }

@@ -58,8 +58,8 @@ namespace Mini_Account_Management_System.Pages.AppResouces
                     existing.ParentId = Input.ParentId;
                     existing.MenuOrder = Input.MenuOrder;
                 }
-
-                await _context.SaveChangesAsync();
+            TempData["SuccessMessage"] = "App Resouces saved successfully.";
+            await _context.SaveChangesAsync();
                 return RedirectToPage();
             }
 

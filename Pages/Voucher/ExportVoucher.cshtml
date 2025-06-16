@@ -6,6 +6,12 @@
 
 <h2>Export Voucher Report</h2>
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    TempData["SuccessMessage"] = null;
+}
+
 <!-- Search Form -->
 <form method="get">
     <div class="row mb-3">

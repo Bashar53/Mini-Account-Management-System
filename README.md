@@ -69,3 +69,94 @@ Data is saved via:
 
 ---
 
+## 🚀 Features
+
+- 🧾 Chart of Accounts with Tree View
+- 📥 Voucher Entry (Journal, Payment, Receipt)
+- 📤 Voucher Export (HTML, Excel)
+- 🔐 ASP.NET Core Identity integration
+- 🎛️ Role-based and permission-based access control
+- 🧩 Modular resource and permission management
+- 📦 Database interaction via stored procedures
+
+---
+
+## 📂 Project Structure
+
+```text
+Mini_Account_Management_System/
+│
+├── .github/
+│   └── workflows/
+│
+├── Areas/
+│   └── Identity/
+│       └── Pages/
+│           ├── _ValidationScriptsPartial.cshtml
+│           ├── _ViewImports.cshtml
+│           ├── _ViewStart.cshtml
+│           └── Account/
+│               ├── Login.cshtml / Login.cshtml.cs
+│               ├── Logout.cshtml / Logout.cshtml.cs
+│               ├── Register.cshtml / Register.cshtml.cs
+│               └── _ViewImports.cshtml
+│
+├── DbConnection/
+│   └── ApplicationDbContext.cs
+│
+├── Migrations/
+│   ├── 20250602165519_IdentityMigration.cs
+│   ├── 20250602165519_IdentityMigration.Designer.cs
+│   └── ApplicationDbContextModelSnapshot.cs
+│
+├── Models/
+│   ├── AccountsChart.cs
+│   ├── AppPermission.cs
+│   ├── AppResource.cs
+│   ├── VoucherEntry.cs
+│   └── VoucherReportDto.cs
+│
+├── Pages/
+│   ├── Index.cshtml / Index.cshtml.cs
+│   ├── Privacy.cshtml / Privacy.cshtml.cs
+│   ├── Error.cshtml / Error.cshtml.cs
+│   ├── _ViewImports.cshtml
+│   ├── _ViewStart.cshtml
+│   │
+│   ├── AccountsChart/
+│   │   ├── Index.cshtml / Index.cshtml.cs
+│   │   ├── Upsert.cshtml / Upsert.cshtml.cs
+│   │   └── _AccountTree.cshtml / _AccountTree.cshtml.cs
+│   │
+│   ├── Admin/
+│   │   ├── AssignPermissions.cshtml / .cs
+│   │   ├── CreateRole.cshtml / .cs
+│   │   ├── DeleteRole.cshtml / .cs
+│   │   ├── EditRole.cshtml / .cs
+│   │   └── RoleList.cshtml / .cs
+│   │
+│   ├── AppResources/
+│   │   └── ResourcesList.cshtml / .cs
+│   │
+│   ├── Shared/
+│   │   ├── _Layout.cshtml
+│   │   ├── _Layout.cshtml.css
+│   │   ├── _LoginPartial.cshtml
+│   │   ├── _Menu.cshtml / _Menu.cshtml.cs
+│   │   └── _ValidationScriptsPartial.cshtml
+│   │
+│   └── Voucher/
+│       ├── ExportVoucher.cshtml / .cs
+│       └── VoucherEntry.cshtml / .cs
+│
+├── Properties/
+│   └── launchSettings.json
+│
+├── Service/
+│   ├── AccountsChartService.cs
+│   ├── MenuService.c
+
+
+
+
+

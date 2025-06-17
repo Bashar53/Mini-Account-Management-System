@@ -13,7 +13,9 @@ A mini web-based accounting application built with ASP.NET Core Razor Pages. It 
 - Access control is enforced per-page using `PermissionService
 <img width="951" alt="image" src="https://github.com/user-attachments/assets/677db1da-8c1b-494e-8963-e49a98cf0ac5" />
 <img width="846" alt="image" src="https://github.com/user-attachments/assets/0fd9e617-3503-444c-8b4d-2c921585a9e5" />
- <img width="838" alt="image" src="https://github.com/user-attachments/assets/34ff3b44-484c-42df-9484-b011d4611b0e" />
+<img width="838" alt="image" src="https://github.com/user-attachments/assets/34ff3b44-484c-42df-9484-b011d4611b0e" />
+<img width="880" alt="image" src="https://github.com/user-attachments/assets/4137cbe9-6841-4094-86a7-e672b1adc9c3" />
+
 
  
 ### 2. 🧱 Chart of Accounts
